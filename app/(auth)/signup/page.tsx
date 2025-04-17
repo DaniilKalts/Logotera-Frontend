@@ -1,111 +1,139 @@
-export const metadata = {
-  title: "Sign Up - Simple",
-  description: "Page description",
-};
+'use client';
 
-export default function SignUp() {
+import React, { useState } from 'react';
+
+// export const metadata = {
+//   title: "Sign Up - Simple",
+//   description: "Page description",
+// };
+
+export default function SignUpForm() {
+  const [formData, setFormData] = useState({
+    name: '',
+    surname: '',
+    email: '',
+    password: ''
+  });
+
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.id]: e.target.value
+    }));
+  };
+
+  const handleSubmit = async (e:React.ChangeEvent<HTMLFormElement> ) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch('http://localhost:5117/api/User/Register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        alert('Registration successful!');
+        console.log(data);
+      } else {
+        alert('Registration failed!');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error connecting to server');
+    }
+  };
+
   return (
-    <>
-      <div className="mb-10">
-        <h1 className="text-4xl font-bold">Create your account</h1>
-      </div>
-
-      {/* Form */}
-      <form>
-        <div className="space-y-4">
-          <div>
-            <label
-              className="mb-1 block text-sm font-medium text-gray-700"
-              htmlFor="name"
-            >
-              Full name
-            </label>
-            <input
-              id="name"
-              className="form-input w-full py-2"
-              type="text"
-              placeholder="Corey Barker"
-              required
-            />
-          </div>
-          <div>
-            <label
-              className="mb-1 block text-sm font-medium text-gray-700"
-              htmlFor="email"
-            >
-              Email
-            </label>
-            <input
-              id="email"
-              className="form-input w-full py-2"
-              type="email"
-              placeholder="corybarker@email.com"
-              required
-            />
-          </div>
-          <div>
-            <label
-              className="mb-1 block text-sm font-medium text-gray-700"
-              htmlFor="phone"
-            >
-              Phone
-            </label>
-            <input
-              id="phone"
-              className="form-input w-full py-2"
-              type="text"
-              placeholder="(+750) 932-8907"
-              required
-            />
-          </div>
-          <div>
-            <label
-              className="mb-1 block text-sm font-medium text-gray-700"
-              htmlFor="password"
-            >
-              Password
-            </label>
-            <input
-              id="password"
-              className="form-input w-full py-2"
-              type="password"
-              autoComplete="on"
-              placeholder="••••••••"
-              required
-            />
-          </div>
+      <>
+        <div className="mb-10">
+          <h1 className="text-4xl font-bold">Create your account</h1>
         </div>
-        <div className="mt-6 space-y-3">
-          <button className="btn w-full bg-linear-to-t from-blue-600 to-blue-500 bg-[length:100%_100%] bg-[bottom] text-white shadow-sm hover:bg-[length:100%_150%]">
-            Register
-          </button>
-          <div className="text-center text-sm italic text-gray-400">Or</div>
-          <button className="btn w-full bg-linear-to-t from-gray-900 to-gray-700 bg-[length:100%_100%] bg-[bottom] text-white shadow-sm hover:bg-[length:100%_150%]">
-            Continue with GitHub
-          </button>
-        </div>
-      </form>
 
-      {/* Bottom link */}
-      <div className="mt-6 text-center">
-        <p className="text-sm text-gray-500">
-          By signing up, you agree to the{" "}
-          <a
-            className="whitespace-nowrap font-medium text-gray-700 underline hover:no-underline"
-            href="#0"
-          >
-            Terms of Service
-          </a>{" "}
-          and{" "}
-          <a
-            className="whitespace-nowrap font-medium text-gray-700 underline hover:no-underline"
-            href="#0"
-          >
-            Privacy Policy
-          </a>
-          .
-        </p>
-      </div>
-    </>
+        {/* Form */}
+        <form onSubmit={handleSubmit}>
+          <div className="space-y-4">
+            <div>
+              <label htmlFor="name" className="mb-1 block text-sm font-medium text-gray-700">
+                Name
+              </label>
+              <input
+                  id="name"
+                  className="form-input w-full py-2"
+                  type="text"
+                  placeholder="Corey"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+              />
+            </div>
+            <div>
+              <label htmlFor="name" className="mb-1 block text-sm font-medium text-gray-700">
+                Surname
+              </label>
+              <input
+                  id="surname"
+                  className="form-input w-full py-2"
+                  type="text"
+                  placeholder="Barker"
+                  value={formData.surname}
+                  onChange={handleChange}
+                  required
+              />
+            </div>
+            <div>
+              <label htmlFor="email" className="mb-1 block text-sm font-medium text-gray-700">
+                Email
+              </label>
+              <input
+                  id="email"
+                  className="form-input w-full py-2"
+                  type="email"
+                  placeholder="example@email.com"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+              />
+            </div>
+            <div>
+              <label htmlFor="password" className="mb-1 block text-sm font-medium text-gray-700">
+                Password
+              </label>
+              <input
+                  id="password"
+                  className="form-input w-full py-2"
+                  type="password"
+                  placeholder="••••••••"
+                  autoComplete="on"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+              />
+            </div>
+          </div>
+          <div className="mt-6 space-y-3">
+            <button type="submit" className="btn w-full bg-blue-600 text-white">
+              Register
+            </button>
+            <div className="text-center text-sm italic text-gray-400">Or</div>
+            <button type="button" className="btn w-full bg-gray-900 text-white">
+              Continue with GitHub
+            </button>
+          </div>
+        </form>
+
+        {/* Bottom link */}
+        <div className="mt-6 text-center">
+          <p className="text-sm text-gray-500">
+            By signing up, you agree to the{" "}
+            <a className="underline" href="#0">Terms of Service</a> and{" "}
+            <a className="underline" href="#0">Privacy Policy</a>.
+          </p>
+        </div>
+      </>
   );
 }
