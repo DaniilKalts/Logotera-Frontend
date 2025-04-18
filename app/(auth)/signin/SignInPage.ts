@@ -6,8 +6,8 @@ export const metadata = {
 };
 
 
-import SignUpForm from './page';
+import SignInForm from './page';
 
-export default function SignUpPage() {
-    return SignUpForm ;
+export default function SignInPage() {
+    return SignInForm ;
 }
