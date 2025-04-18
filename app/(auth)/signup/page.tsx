@@ -1,11 +1,8 @@
 'use client';
-
 import React, { useState } from 'react';
+import {useRouter} from "next/navigation";
 
-// export const metadata = {
-//   title: "Sign Up - Simple",
-//   description: "Page description",
-// };
+
 
 export default function SignUpForm() {
   const [formData, setFormData] = useState({
@@ -14,6 +11,8 @@ export default function SignUpForm() {
     email: '',
     password: ''
   });
+
+  const router = useRouter();
 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,6 +38,8 @@ export default function SignUpForm() {
         const data = await response.json();
         alert('Registration successful!');
         console.log(data);
+        router.push('/');
+
       } else {
         alert('Registration failed!');
       }
