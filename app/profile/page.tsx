@@ -36,7 +36,7 @@ export default function UserPage() {
                         userName: data.userName,
                         surname: data.surname,
                         email: data.email,
-                        description: data.description,
+                        description: data.descripton,
                     });
                 } else {
                     alert("Failed to fetch user data");
