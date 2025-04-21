@@ -30,6 +30,7 @@ export default function UserPage() {
 
                 if (response.ok) {
                     const data = await response.json();
+                    console.log("Fetched data:", data);
                     setFormData({
                         id: data.id,
                         userName: data.userName,
@@ -106,18 +107,15 @@ export default function UserPage() {
                                 <p className="text-sm text-gray-500">Email</p>
                                 <p className="font-medium">{formData.email}</p>
                             </div>
+                            <div>
+                                <p className="text-sm text-gray-500">Description</p>
+                                <p className="font-medium">{formData.description || "No description yet"}</p>
+                            </div>
                         </div>
 
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-                        {/*<div className="bg-white shadow rounded-lg p-4">*/}
-                        {/*    <h2 className="text-lg font-semibold mb-2">Introduction</h2>*/}
-                        {/*    <textarea*/}
-                        {/*        placeholder="Write something about yourself..."*/}
-                        {/*        className="w-full h-32 border border-gray-300 p-2 rounded-md"*/}
-                        {/*    />*/}
-                        {/*</div>*/}
                         <div className="bg-white shadow rounded-lg p-4">
                             <h2 className="text-lg font-semibold mb-2">Introduction</h2>
                             <textarea
