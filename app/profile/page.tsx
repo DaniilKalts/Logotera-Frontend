@@ -13,7 +13,7 @@ export default function UserPage() {
         userName: '',
         surname: '',
         email: '',
-        description: ''
+        descripton: ''
     });
 
     const [isEditing, setIsEditing] = useState(false);
@@ -37,7 +37,7 @@ export default function UserPage() {
                         userName: data.userName,
                         surname: data.surname,
                         email: data.email,
-                        description: data.descripton,
+                        descripton: data.descripton,
                     });
                 } else {
                     alert("Failed to fetch user data");
@@ -63,16 +63,21 @@ export default function UserPage() {
                     userName: formData.userName,
                     surname: formData.surname,
                     email: formData.email,
-                    description: formData.description
+                    descripton: formData.descripton !== null ? formData.descripton : ''
                 })
             });
 
             if (response.ok) {
                 const data = await response.json();
-                alert("Changes saved!");
-                setFormData(data); // обновим всё сразу
-                setIsEditing(false);
-            } else {
+                setFormData({
+                    id: data.id,
+                    userName: data.userName,
+                    surname: data.surname,
+                    email: data.email,
+                    descripton: data.descripton || '',
+                })
+            }
+            else {
                 const errorData = await response.json();
                 alert(`Failed to update: ${errorData.message || 'Unknown error'}`);
             }
@@ -149,12 +154,12 @@ export default function UserPage() {
                                 <p className="text-sm text-gray-500">Description</p>
                                 {isEditing ? (
                                     <textarea
-                                        value={formData.description}
-                                        onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                                        value={formData.descripton}
+                                        onChange={(e) => setFormData({ ...formData, descripton: e.target.value })}
                                         className="w-full h-24 border border-gray-300 p-2 rounded-md"
                                     />
                                 ) : (
-                                    <p className="font-medium">{formData.description || "No description yet"}</p>
+                                    <p className="font-medium">{formData.descripton || "No description yet"}</p>
                                 )}
                             </div>
                         </div>
