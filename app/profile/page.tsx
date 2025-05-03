@@ -13,9 +13,11 @@ export default function UserPage() {
         userName: '',
         surname: '',
         email: '',
-        descripton: ''
+        description: '',
+        imageUrl: ''
     });
 
+    const [imageFile, setImageFile] = useState<File | null>(null);
     const [isEditing, setIsEditing] = useState(false);
 
     useEffect(() => {
@@ -23,21 +25,17 @@ export default function UserPage() {
 
         const fetchUser = async () => {
             try {
-                const response = await fetch(`http://localhost:5117/api/User/${userId}`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-
+                const response = await fetch(`http://localhost:5117/api/User/${userId}`);
                 if (response.ok) {
                     const data = await response.json();
+                    console.log(data);
                     setFormData({
                         id: data.id,
                         userName: data.userName,
                         surname: data.surname,
                         email: data.email,
-                        descripton: data.descripton,
+                        description: data.description,
+                        imageUrl: data.imageUrl || ''
                     });
                 } else {
                     alert("Failed to fetch user data");
@@ -53,37 +51,47 @@ export default function UserPage() {
 
     const handleSaveChanges = async () => {
         try {
-            const response = await fetch('http://localhost:5117/api/User', {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    id: formData.id,
-                    userName: formData.userName,
-                    surname: formData.surname,
-                    email: formData.email,
-                    descripton: formData.descripton !== null ? formData.descripton : ''
-                })
+            const form = new FormData();
+            form.append("id", formData.id);
+            form.append("userName", formData.userName);
+            form.append("surname", formData.surname);
+            form.append("email", formData.email);
+            form.append("description", formData.description || '');
+            if (imageFile) {
+                form.append("image", imageFile); // ключ 'image' должен совпадать с параметром в контроллере
+            }
+
+            const response = await fetch("http://localhost:5117/api/User", {
+                method: "PUT",
+                body: form
             });
 
             if (response.ok) {
                 const data = await response.json();
                 setFormData({
-                    id: data.id,
-                    userName: data.userName,
-                    surname: data.surname,
-                    email: data.email,
-                    descripton: data.descripton || '',
-                })
-            }
-            else {
+                    ...formData,
+                    imageUrl: data.imageUrl || formData.imageUrl
+                });
+                setIsEditing(false);
+            } else {
                 const errorData = await response.json();
                 alert(`Failed to update: ${errorData.message || 'Unknown error'}`);
             }
         } catch (err) {
             console.error(err);
             alert("Error updating user");
+        }
+    };
+
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            setImageFile(file);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setFormData((prev) => ({ ...prev, imageUrl: reader.result as string }));
+            };
+            reader.readAsDataURL(file);
         }
     };
 
@@ -95,7 +103,22 @@ export default function UserPage() {
                 <div className="max-w-5xl mx-auto px-4 -mt-20">
                     <div className="bg-white shadow-lg rounded-xl p-6 relative z-10">
                         <div className="flex flex-col md:flex-row md:items-center md:space-x-6">
-                            <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-md" />
+                            <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-md">
+                                {formData.imageUrl ? (
+                                    <img src={formData.imageUrl} alt="Profile" className="w-full h-full object-cover" />
+                                ) : (
+                                    <div className="w-full h-full bg-gray-200" />
+                                )}
+                                {isEditing && (
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        onChange={handleImageChange}
+                                        className="absolute inset-0 opacity-0 cursor-pointer"
+                                        title="Change Avatar"
+                                    />
+                                )}
+                            </div>
                             <div className="mt-4 md:mt-0">
                                 <h1 className="text-2xl font-bold">{formData.userName} {formData.surname}</h1>
                                 <p className="text-gray-600">{formData.email}</p>
@@ -154,12 +177,12 @@ export default function UserPage() {
                                 <p className="text-sm text-gray-500">Description</p>
                                 {isEditing ? (
                                     <textarea
-                                        value={formData.descripton}
-                                        onChange={(e) => setFormData({ ...formData, descripton: e.target.value })}
+                                        value={formData.description}
+                                        onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                                         className="w-full h-24 border border-gray-300 p-2 rounded-md"
                                     />
                                 ) : (
-                                    <p className="font-medium">{formData.descripton || "No description yet"}</p>
+                                    <p className="font-medium">{formData.description || "No description yet"}</p>
                                 )}
                             </div>
                         </div>
