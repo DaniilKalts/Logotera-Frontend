@@ -5,8 +5,6 @@ import DefaultLayout from '../(default)/layout';
 import { useSearchParams } from "next/navigation";
 
 export default function UserPage() {
-    const searchParams = useSearchParams();
-    const userId = searchParams.get('id');
 
     const [formData, setFormData] = useState({
         id: '',
@@ -21,33 +19,40 @@ export default function UserPage() {
     const [isEditing, setIsEditing] = useState(false);
 
     useEffect(() => {
-        if (!userId) return;
-
-        const fetchUser = async () => {
-            try {
-                const response = await fetch(`http://localhost:5117/api/User/${userId}`);
-                if (response.ok) {
-                    const data = await response.json();
-                    console.log(data);
-                    setFormData({
-                        id: data.id,
-                        userName: data.userName,
-                        surname: data.surname,
-                        email: data.email,
-                        description: data.description,
-                        imageUrl: data.imageUrl || ''
-                    });
-                } else {
-                    alert("Failed to fetch user data");
-                }
-            } catch (err) {
-                console.error(err);
-                alert("Error connecting to server");
-            }
-        };
-
         fetchUser();
-    }, [userId]);
+    }, []);
+
+    const fetchUser = async () => {
+        const token = localStorage.getItem("token"); // or sessionStorage
+
+        try {
+            const response = await fetch(`http://localhost:5117/api/User/profile`, {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                setFormData({
+                    id: data.id,
+                    userName: data.userName,
+                    surname: data.surname,
+                    email: data.email,
+                    description: data.description,
+                    imageUrl: data.imageUrl || ''
+                });
+            } else {
+                alert("Failed to fetch user data");
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Error connecting to server");
+        }
+
+    };
 
     const handleSaveChanges = async () => {
         try {
@@ -58,7 +63,7 @@ export default function UserPage() {
             form.append("email", formData.email);
             form.append("description", formData.description || '');
             if (imageFile) {
-                form.append("image", imageFile); // ключ 'image' должен совпадать с параметром в контроллере
+                form.append("image", imageFile);
             }
 
             const response = await fetch("http://localhost:5117/api/User", {

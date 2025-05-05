@@ -34,6 +34,7 @@ export default function SignInForm() {
 
       if (response.ok) {
         const data = await response.json();
+        localStorage.setItem('token', data.token);
         alert('Login successful!');
         console.log(data);
         router.push('/');
