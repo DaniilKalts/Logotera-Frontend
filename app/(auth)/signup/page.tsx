@@ -9,13 +9,16 @@ export default function SignUpForm() {
     name: '',
     surname: '',
     email: '',
-    password: ''
+    password: '',
+    role: ''
   });
 
   const router = useRouter();
 
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+      e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     setFormData(prev => ({
       ...prev,
       [e.target.id]: e.target.value
@@ -85,6 +88,22 @@ export default function SignUpForm() {
                   onChange={handleChange}
                   required
               />
+            </div>
+            <div>
+              <label htmlFor="role" className="mb-1 block text-sm font-medium text-gray-700">
+                Role
+              </label>
+              <select
+                  id="role"
+                  className="form-select w-full py-2"
+                  value={formData.role}
+                  onChange={handleChange}
+                  required
+              >
+                <option value="">Select role</option>
+                <option value="Student">Student</option>
+                <option value="Teacher">Teacher</option>
+              </select>
             </div>
             <div>
               <label htmlFor="email" className="mb-1 block text-sm font-medium text-gray-700">
