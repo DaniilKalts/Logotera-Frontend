@@ -1,5 +1,4 @@
 @import 'tailwindcss';
-
 /* Additional styles */
 @import './additional-styles/utility-patterns.css' layer(components);
 @import './additional-styles/theme.css';
@@ -7,6 +6,7 @@
 @plugin "@tailwindcss/forms" {
   strategy: base;
 }
+@plugin "daisyui";
 
 @theme {
   --font-inter: Inter, sans-serif;

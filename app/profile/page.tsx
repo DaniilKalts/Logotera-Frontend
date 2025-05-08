@@ -23,8 +23,8 @@ export default function UserPage() {
     }, []);
 
     const fetchUser = async () => {
-        const token = localStorage.getItem("token"); // or sessionStorage
-
+        const token = localStorage.getItem("token");
+        console.log(token);
         try {
             const response = await fetch(`http://localhost:5117/api/User/profile`, {
                 method: "GET",
@@ -35,6 +35,7 @@ export default function UserPage() {
             });
 
             if (response.ok) {
+                console.log(token);
                 const data = await response.json();
                 setFormData({
                     id: data.id,
@@ -201,6 +202,26 @@ export default function UserPage() {
                                 </button>
                             </div>
                         )}
+                    </div>
+                    <div className=" mt-8 card w-96 bg-white shadow-xl p-6">
+                        <div className="card-body items-center text-center">
+                            <h2 className="card-title text-xl font-bold mb-4">Progress</h2>
+                            <div
+                                className="radial-progress text-blue-600"
+                                style={
+                                    {
+                                        "--value": 70,
+                                        "--size": "12rem",
+                                        "--thickness": "2rem"
+                                    } as React.CSSProperties
+                                }
+                                role="progressbar"
+                                aria-valuenow={70}
+                            >
+                                70%
+                            </div>
+                            <p className="mt-4 text-gray-600">You’ve completed 70% of your goal!</p>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -1,6 +1,5 @@
 'use client';
 
-
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -34,9 +33,17 @@ export default function SignInForm() {
 
       if (response.ok) {
         const data = await response.json();
+
+        // ✅ Сохраняем токен и роль из data
         localStorage.setItem('token', data.token);
+        localStorage.setItem('role', data.userRole);
+
+        // ✅ Проверяем в консоли
+        console.log('Login response data:', data);
+        console.log('Saved token:', data.token);
+        console.log('Saved role:', data.userRole);
+
         alert('Login successful!');
-        console.log(data);
         router.push('/');
       } else {
         alert('Login failed!');
@@ -52,14 +59,10 @@ export default function SignInForm() {
         <div className="mb-10">
           <h1 className="text-4xl font-bold">Sign in to your account</h1>
         </div>
-        {/* Form */}
         <form onSubmit={handleSubmit}>
           <div className="space-y-4">
             <div>
-              <label
-                  className="mb-1 block text-sm font-medium text-gray-700"
-                  htmlFor="email"
-              >
+              <label className="mb-1 block text-sm font-medium text-gray-700" htmlFor="email">
                 Email
               </label>
               <input
@@ -72,10 +75,7 @@ export default function SignInForm() {
               />
             </div>
             <div>
-              <label
-                  className="mb-1 block text-sm font-medium text-gray-700"
-                  htmlFor="password"
-              >
+              <label className="mb-1 block text-sm font-medium text-gray-700" htmlFor="password">
                 Password
               </label>
               <input
@@ -95,12 +95,8 @@ export default function SignInForm() {
             </button>
           </div>
         </form>
-        {/* Bottom link */}
         <div className="mt-6 text-center">
-          <Link
-              className="text-sm text-gray-700 underline hover:no-underline"
-              href="/reset-password"
-          >
+          <Link className="text-sm text-gray-700 underline hover:no-underline" href="/reset-password">
             Forgot password?
           </Link>
         </div>
