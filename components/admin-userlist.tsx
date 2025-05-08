@@ -48,6 +48,37 @@ export default function UsersList() {
         fetchUsers();
     }, []);
 
+    const handleDelete = async (id: string) => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            alert("Token not found. Please log in.");
+            return;
+        }
+
+        const confirmDelete = window.confirm("Are you sure you want to delete this user?");
+        if (!confirmDelete) return;
+
+        try {
+            const response = await fetch(`http://localhost:5117/api/User/${id}`, {
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+            });
+
+            if (response.ok) {
+                setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
+                alert("User deleted successfully.");
+            } else {
+                alert("Failed to delete user.");
+            }
+        } catch (err) {
+            console.error("Delete error:", err);
+            alert("Error connecting to server.");
+        }
+    };
+
     if (loading) return <p>Loading users...</p>;
 
     return (
@@ -68,7 +99,10 @@ export default function UsersList() {
                                 <p className="text-sm text-gray-600">{user.email}</p>
                             </div>
                             <div className="mt-4 text-center">
-                                <button className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none">
+                                <button
+                                    onClick={() => handleDelete(user.id)}
+                                    className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none"
+                                >
                                     Delete
                                 </button>
                             </div>
