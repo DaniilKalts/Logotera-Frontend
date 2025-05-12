@@ -1,9 +1,11 @@
+// app/page.tsx или app/default/page.tsx
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Hero from "@/components/hero-home";
-import AdminUserlist from "@/components/admin-userlist";
-import Header from "@/components/ui/header"; // Убедитесь, что Header импортируется
+import Header from "@/components/ui/header";
+import AdminDashboard from "@/app/admin/page";
 
 export default function Home() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -13,34 +15,17 @@ export default function Home() {
         const token = localStorage.getItem("token");
         const role = localStorage.getItem("role");
 
-        if (token) {
-            setIsAuthenticated(true);  // Если токен есть, пользователь авторизован
-        } else {
-            setIsAuthenticated(false);
-        }
-
-        if (role === "Admin" || role === "admin") {
-            setIsAdmin(true);  // Если роль Admin, то показываем админский интерфейс
-        } else {
-            setIsAdmin(false);
-        }
+        setIsAuthenticated(!!token);
+        setIsAdmin(role?.toLowerCase() === "admin");
     }, []);
 
     return (
         <>
-            <Header /> {/* Добавлен Header компонент сверху */}
+            <Header />
+            <div className="pt-20 px-4">
+                {!isAuthenticated && <Hero />}
 
-            <div className="pt-20 px-4"> {/* Добавлены отступы сверху для контента, чтобы не перекрывать хедер */}
-                {!isAuthenticated && <Hero />} {/* Показываем Hero, если не авторизован */}
-
-                {isAuthenticated && isAdmin && (
-                    <div className="py-6">
-                        <h2 className="text-3xl font-bold text-green-600 mb-4">
-                            Welcome, Admin!
-                        </h2>
-                        <AdminUserlist />
-                    </div>
-                )}
+                {isAuthenticated && isAdmin && <AdminDashboard />}
 
                 {isAuthenticated && !isAdmin && (
                     <div className="py-6">
