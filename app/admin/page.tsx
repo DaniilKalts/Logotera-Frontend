@@ -1,20 +1,9 @@
-﻿// components/admin/AdminDashboard.tsx
-"use client";
+﻿"use client";
 
-import { useRouter } from "next/navigation";
-import AdminUserlist from "@/app/admin/admin-userlist";
+import Link from "next/link";
+import AdminUserlist from "@/components/ui/admin-userlist";
 
 export default function AdminDashboard() {
-    const router = useRouter();
-
-    const handleCreateGroup = () => {
-        router.push("/admin/create-group");
-    };
-
-    const handleCreateSubject = () => {
-        router.push("/admin/create-subject");
-    };
-
     return (
         <div className="py-10 px-6 max-w-4xl mx-auto">
             <h2 className="text-4xl font-semibold text-center text-gray-800 mb-10">
@@ -22,18 +11,18 @@ export default function AdminDashboard() {
             </h2>
 
             <div className="flex flex-col sm:flex-row justify-center gap-4 mb-10">
-                <button
-                    onClick={handleCreateGroup}
-                    className="px-6 py-3 bg-gray-900 text-white rounded-xl shadow-md hover:bg-gray-700 transition"
+                <Link
+                    href="/group"
+                    className="px-6 py-3 bg-gray-900 text-white rounded-xl shadow-md hover:bg-gray-700 transition text-center"
                 >
                     + Create Group
-                </button>
-                <button
-                    onClick={handleCreateSubject}
-                    className="px-6 py-3 bg-gray-900 text-white rounded-xl shadow-md hover:bg-gray-700 transition"
+                </Link>
+                <Link
+                    href="/subject"
+                    className="px-6 py-3 bg-gray-900 text-white rounded-xl shadow-md hover:bg-gray-700 transition text-center"
                 >
                     + Create Subject
-                </button>
+                </Link>
             </div>
 
             <div className="bg-white shadow-md rounded-xl p-6">
