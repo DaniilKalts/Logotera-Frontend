@@ -1,140 +1,268 @@
 ﻿"use client";
 
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import DefaultLayout from "../(default)/layout";
 
-export default function GroupManager() {
+type Student = {
+    studentId: number;
+    name: string;
+    surname: string;
+};
+
+type StudentForModal = {
+    id: number;
+    name: string;
+    surname: string;
+};
+
+
+
+type Group = {
+    id: number;
+    name: string;
+    students: Student[];
+};
+
+export default function CreateSubjectPage() {
     const [groupName, setGroupName] = useState("");
-    const [users, setUsers] = useState<{ id: number; firstName: string; lastName: string }[]>([]);
-    const [selectedUserIds, setSelectedUserIds] = useState<number[]>([]);
-    const [groups, setGroups] = useState<
-        { id: number; name: string; members: { id: number; firstName: string; lastName: string }[] }[]
-    >([]);
-    const [showUserModal, setShowUserModal] = useState(false);
+    const [groups, setGroups] = useState<Group[]>([]);
+    const [selectedGroup, setSelectedGroup] = useState<number | null>(null);
+    const [showAddStudentModal, setShowAddStudentModal] = useState(false);
+    const [allStudents, setAllStudents] = useState<StudentForModal[]>([]);
 
     useEffect(() => {
-        fetchUsers();
         fetchGroups();
     }, []);
 
-    const fetchUsers = async () => {
-        const res = await fetch("http://localhost:5117/api/User/all");
-        const data = await res.json();
-        setUsers(data);
-    };
-
+    // Получаем список групп с сервера
     const fetchGroups = async () => {
-        const res = await fetch("http://localhost:5117/api/Group/all");
-        const data = await res.json();
-        setGroups(data);
-    };
+        try {
+            const res = await fetch("http://localhost:5117/api/User/list/groups");
+            const data = await res.json();
 
-    const handleCreateGroup = async () => {
-        if (!groupName || selectedUserIds.length === 0) return;
+            const fixedData: Group[] = data.map((group: any) => ({
+                id: group.id,
+                name: group.name,
+                students: group.students || [],
+            }));
 
-        const res = await fetch("http://localhost:5117/api/Group/create", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                name: groupName,
-                userIds: selectedUserIds,
-            }),
-        });
-
-        if (res.ok) {
-            setGroupName("");
-            setSelectedUserIds([]);
-            await fetchGroups();
+            setGroups(fixedData);
+        } catch (error) {
+            console.error("Error fetching groups:", error);
         }
     };
 
-    const toggleUserSelection = (userId: number) => {
-        setSelectedUserIds((prev) =>
-            prev.includes(userId) ? prev.filter((id) => id !== userId) : [...prev, userId]
-        );
+    // Получаем всех студентов для модалки добавления
+    const fetchAllStudents = async () => {
+        try {
+            const res = await fetch("http://localhost:5117/api/User/group/list/students");
+            const data = await res.json();
+
+            // Преобразуем studentId в id
+            const students = data.map((student: any) => ({
+                id: student.studentId,
+                name: student.name,
+                surname: student.surname,
+            }));
+
+            setAllStudents(students);
+        } catch (error) {
+            console.error("Error fetching students:", error);
+        }
+    };
+
+
+    // Добавление группы
+    const handleAddGroup = async () => {
+        if (!groupName.trim()) return;
+
+        const res = await fetch("http://localhost:5117/api/User/group", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name: groupName }),
+        });
+
+        if (res.ok) {
+            await fetchGroups();
+            setGroupName("");
+        }
+    };
+
+    // Удаление группы
+    const deleteGroup = async (id: number) => {
+        await fetch(`http://localhost:5117/api/User/group/delete?groupId=${id}`, {
+            method: "DELETE",
+        });
+
+        await fetchGroups();
+        setSelectedGroup(null);
+    };
+
+    const removeStudentFromGroup = async (groupId: number, studentId: number) => {
+        await fetch(`http://localhost:5117/api/User/groups/assign-students/delete`, {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                groupId: groupId,
+                studentIds: [studentId],
+            }),
+        });
+        console.log(groupId, studentId);
+        await fetchGroups();
+    };
+
+    // Добавление студента в группу (по одному)
+    const addStudentToGroup = async (groupId: number, studentId: number) => {
+        try {
+            const res = await fetch("http://localhost:5117/api/User/groups/assign-students", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    groupId: groupId,
+                    studentIds: [studentId],
+                }),
+            });
+            console.log(groupId, studentId)
+
+            if (!res.ok) {
+                throw new Error("Failed to add student");
+            }
+
+            await fetchGroups();
+            setShowAddStudentModal(false);
+        } catch (error) {
+            console.error("Error adding student:", error);
+        }
+    };
+
+    // Открываем модалку и загружаем всех студентов
+    const openAddStudentModal = () => {
+        if (selectedGroup === null) return;
+        fetchAllStudents();
+        setShowAddStudentModal(true);
     };
 
     return (
-        <div className="p-6 max-w-4xl mx-auto">
-            <h2 className="text-2xl font-bold mb-4">Create Group</h2>
+        <DefaultLayout>
+            <div className="max-w-4xl mx-auto pt-32 px-4">
+                <h1 className="text-3xl font-semibold text-gray-800 mb-8 text-center">Create a Group</h1>
 
-            <div className="mb-4">
-                <label className="block mb-1 font-medium">Group Name</label>
-                <input
-                    type="text"
-                    value={groupName}
-                    onChange={(e) => setGroupName(e.target.value)}
-                    className="w-full p-2 border rounded"
-                />
-            </div>
-
-            <div className="mb-4">
-                <button
-                    onClick={() => setShowUserModal(true)}
-                    className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                >
-                    Select Users
-                </button>
-                <div className="mt-2 text-sm text-gray-700">
-                    Selected: {selectedUserIds.length} user(s)
-                </div>
-            </div>
-
-            <button
-                onClick={handleCreateGroup}
-                className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
-            >
-                Create Group
-            </button>
-
-            {/* Modal for selecting users */}
-            {showUserModal && (
-                <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-                    <div className="bg-white p-6 rounded-xl max-w-md w-full shadow-lg">
-                        <h3 className="text-xl font-semibold mb-4">Select Users</h3>
-                        <div className="max-h-60 overflow-y-auto space-y-2">
-                            {users.map((user) => (
-                                <div
-                                    key={user.id}
-                                    onClick={() => toggleUserSelection(user.id)}
-                                    className={`p-2 border rounded cursor-pointer ${
-                                        selectedUserIds.includes(user.id)
-                                            ? "bg-blue-100 border-blue-400"
-                                            : "hover:bg-gray-100"
-                                    }`}
-                                >
-                                    {user.firstName} {user.lastName}
-                                </div>
-                            ))}
-                        </div>
+                {/* Input to add group */}
+                <div className="bg-white shadow-lg rounded-2xl p-8 mb-10 border border-gray-200">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                        <input
+                            type="text"
+                            placeholder="Enter group name"
+                            value={groupName}
+                            onChange={(e) => setGroupName(e.target.value)}
+                            className="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gray-800"
+                        />
                         <button
-                            onClick={() => setShowUserModal(false)}
-                            className="mt-4 text-sm text-gray-600 hover:underline"
+                            onClick={handleAddGroup}
+                            className="px-6 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-700 transition"
                         >
-                            Done
+                            Add Group
                         </button>
                     </div>
                 </div>
-            )}
 
-            <div className="mt-10">
-                <h2 className="text-xl font-bold mb-4">Created Groups</h2>
-                {groups.length === 0 ? (
-                    <p className="text-gray-600">No groups created yet.</p>
-                ) : (
-                    groups.map((group) => (
-                        <div key={group.id} className="mb-6 p-4 border rounded shadow">
-                            <h3 className="text-lg font-semibold mb-2">{group.name}</h3>
-                            <ul className="list-disc list-inside text-sm">
-                                {group.members.map((member) => (
-                                    <li key={member.id}>
-                                        {member.firstName} {member.lastName}
-                                    </li>
-                                ))}
-                            </ul>
+                {/* List of groups */}
+                <div className="grid sm:grid-cols-2 gap-6">
+                    {groups.map((group) => (
+                        <div
+                            key={group.id}
+                            onClick={() => setSelectedGroup(group.id)}
+                            className="cursor-pointer border border-gray-200 rounded-2xl p-6 bg-white shadow hover:shadow-md transition text-center"
+                        >
+                            <h3 className="text-xl font-medium text-gray-800">{group.name}</h3>
                         </div>
-                    ))
+                    ))}
+                </div>
+
+                {/* Group details */}
+                {selectedGroup !== null && (
+                    <div className="mt-10 p-8 border border-gray-200 rounded-2xl bg-gray-50 shadow-inner relative">
+                        <button
+                            onClick={() => setSelectedGroup(null)}
+                            className="absolute top-4 right-4 text-gray-600 hover:text-black text-2xl"
+                        >
+                            ×
+                        </button>
+
+                        <h2 className="text-2xl font-semibold mb-4 text-center">
+                            {groups.find((g) => g.id === selectedGroup)?.name}
+                        </h2>
+
+                        <div>
+                            <h3 className="font-semibold mb-2">Students:</h3>
+                            <ul className="list-disc list-inside">
+                                {groups
+                                    .find((g) => g.id === selectedGroup)
+                                    ?.students.map((student) => (
+                                        <li key={student.studentId} className="flex justify-between items-center">
+                                            {student.name} {student.surname}
+                                            <button
+                                                onClick={() => removeStudentFromGroup(selectedGroup, student.studentId)}
+                                                className="ml-4 text-red-500 text-sm hover:underline"
+                                            >
+                                                Remove
+                                            </button>
+                                        </li>
+                                    ))}
+                            </ul>
+
+                            {groups.find((g) => g.id === selectedGroup)?.students.length === 0 && (
+                                <p className="text-sm text-gray-500">No students in this group.</p>
+                            )}
+
+                            {/* Кнопка открытия модалки добавления студента */}
+                            <button
+                                onClick={openAddStudentModal}
+                                className="mt-2 text-sm text-blue-600 hover:underline"
+                            >
+                                + Add Student
+                            </button>
+                        </div>
+
+                        {/* Удалить группу */}
+                        <button
+                            onClick={() => deleteGroup(selectedGroup)}
+                            className="mt-6 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+                        >
+                            Delete Group
+                        </button>
+                    </div>
+                )}
+
+                {/* Модалка выбора студента */}
+                {showAddStudentModal && (
+                    <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+                        <div className="bg-white p-6 rounded-xl max-w-lg w-full shadow-lg max-h-[80vh] overflow-auto">
+                            <h3 className="text-xl font-semibold mb-4">Select Student</h3>
+                            <div className="grid grid-cols-1 gap-2">
+                                {allStudents.map((student) => (
+                                    <button
+                                        key={student.id}
+                                        onClick={() => {
+                                            if (selectedGroup === null) return;
+                                            addStudentToGroup(selectedGroup, student.id);
+                                        }}
+                                        className="p-2 border border-gray-300 rounded hover:bg-gray-100 text-left"
+                                    >
+                                        {student.name} {student.surname}
+                                    </button>
+                                ))}
+                            </div>
+                            <button
+                                onClick={() => setShowAddStudentModal(false)}
+                                className="mt-4 text-sm text-gray-600 hover:underline"
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
                 )}
             </div>
-        </div>
+        </DefaultLayout>
     );
 }

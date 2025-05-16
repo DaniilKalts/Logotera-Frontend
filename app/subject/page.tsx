@@ -51,7 +51,7 @@ export default function CreateSubjectPage() {
     };
 
     const fetchGroups = async () => {
-        const res = await fetch("http://localhost:5117/api/User/subject/list/groups");
+        const res = await fetch("http://localhost:5117/api/User/list/groups");
         const data = await res.json();
         console.log("groups", data);
         setGroups(data);
