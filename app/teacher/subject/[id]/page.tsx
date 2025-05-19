@@ -1,6 +1,5 @@
 ﻿"use client";
-
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import DefaultLayout from "@/app/(default)/layout";
 
 type Group = {
@@ -14,11 +13,13 @@ type Subject = {
     lecturerName?: string;
     practiceTeacher?: string;
     groups: Group[];
+    syllabusFilePath?: string | null;
 };
 
 export default function SubjectDetailsPage({ params }: { params: { id: string } }) {
     const [subject, setSubject] = useState<Subject | null>(null);
     const subjectId = params.id;
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -37,6 +38,7 @@ export default function SubjectDetailsPage({ params }: { params: { id: string } 
                 const subjectData: Subject = {
                     id: data.id,
                     name: data.name,
+                    syllabusFilePath: data.syllabusFilePath,
                     lecturerName: data.lecturerTeacher
                         ? `${data.lecturerTeacher.firstName} ${data.lecturerTeacher.lastName}`
                         : "Not assigned",
@@ -55,6 +57,60 @@ export default function SubjectDetailsPage({ params }: { params: { id: string } 
         if (subjectId) fetchSubject();
     }, [subjectId]);
 
+    const handleUploadSyllabus = async () => {
+        const file = fileInputRef.current?.files?.[0];
+        if (!file || !subject) {
+            alert("Please select a file first.");
+            return;
+        }
+
+        const token = localStorage.getItem("token");
+        const formData = new FormData();
+        formData.append("file", file);
+
+        try {
+            const res = await fetch(`http://localhost:5117/api/User/teacher/upload-syllabus?subjectId=${subject.id}`, {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                body: formData,
+            });
+
+            if (!res.ok) throw new Error("Upload failed.");
+            alert("Syllabus uploaded successfully.");
+        } catch (error) {
+            console.error("Upload error:", error);
+            alert("Error uploading syllabus.");
+        }
+    };
+
+    const handleDownloadSyllabus = async () => {
+        if (!subject) return;
+        const token = localStorage.getItem("token");
+
+        try {
+            const res = await fetch(`http://localhost:5117/api/User/user/download-syllabus?subjectId=${subject.id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (!res.ok) throw new Error("Download failed.");
+
+            const blob = await res.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "syllabus.pdf"; // или другое имя
+            a.click();
+            window.URL.revokeObjectURL(url);
+        } catch (error) {
+            console.error("Download error:", error);
+            alert("Error downloading syllabus.");
+        }
+    };
+
     if (!subject) {
         return (
             <div className="text-center text-gray-500 mt-20 text-lg">
@@ -72,14 +128,9 @@ export default function SubjectDetailsPage({ params }: { params: { id: string } 
                     </h1>
 
                     <div className="flex flex-col md:flex-row gap-8">
-                        {/* Main info (left) */}
                         <div className="flex-1 space-y-4 text-gray-800 text-base">
-                            <p>
-                                <span className="font-semibold">Lecturer:</span> {subject.lecturerName}
-                            </p>
-                            <p>
-                                <span className="font-semibold">Practice Teacher:</span> {subject.practiceTeacher}
-                            </p>
+                            <p><span className="font-semibold">Lecturer:</span> {subject.lecturerName}</p>
+                            <p><span className="font-semibold">Practice Teacher:</span> {subject.practiceTeacher}</p>
                             <div>
                                 <p className="font-semibold">Groups:</p>
                                 {subject.groups.length > 0 ? (
@@ -94,32 +145,40 @@ export default function SubjectDetailsPage({ params }: { params: { id: string } 
                             </div>
                         </div>
 
-                        {/* Sidebar (right) */}
+                        {/* Sidebar */}
                         <div className="w-full md:w-64 p-4 border rounded-xl bg-gray-50 text-sm text-gray-700">
                             <h3 className="font-semibold text-lg mb-3">Tools</h3>
-                            <ul className="space-y-2">
+                            <ul className="space-y-3">
                                 <li>
+                                    <input
+                                        type="file"
+                                        accept=".pdf,.doc,.docx"
+                                        ref={fileInputRef}
+                                        className="hidden"
+                                        onChange={handleUploadSyllabus}
+                                    />
                                     <button
-                                        // onClick={openAddStudentModal}
-                                        className="mt-2 text-sm text-blue-600 hover:underline"
+                                        onClick={() => fileInputRef.current?.click()}
+                                        className="block w-full text-blue-600 hover:underline"
                                     >
-                                        + Add Syllabus
+                                        {subject.syllabusFilePath ? "Update Syllabus" : "Add Syllabus"}
                                     </button>
                                 </li>
-                                <li>
-                                    <button
-                                        // onClick={openAddStudentModal}
-                                        className="mt-2 text-sm text-blue-600 hover:underline"
-                                    >
-                                        + Add Module
-                                    </button>
-                                </li>
+                                {subject.syllabusFilePath && (
+                                    <li>
+                                        <button
+                                            onClick={handleDownloadSyllabus}
+                                            className="block w-full text-green-600 hover:underline"
+                                        >
+                                            Download Syllabus
+                                        </button>
+                                    </li>
+                                )}
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </DefaultLayout>
-
     );
 }
