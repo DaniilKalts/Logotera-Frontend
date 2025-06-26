@@ -9,8 +9,7 @@ export default function SignUpForm() {
     name: '',
     surname: '',
     email: '',
-    password: '',
-    role: ''
+    password: ''
   });
 
   const router = useRouter();
@@ -90,22 +89,6 @@ export default function SignUpForm() {
               />
             </div>
             <div>
-              <label htmlFor="role" className="mb-1 block text-sm font-medium text-gray-700">
-                Role
-              </label>
-              <select
-                  id="role"
-                  className="form-select w-full py-2"
-                  value={formData.role}
-                  onChange={handleChange}
-                  required
-              >
-                <option value="">Select role</option>
-                <option value="Student">Student</option>
-                <option value="Teacher">Teacher</option>
-              </select>
-            </div>
-            <div>
               <label htmlFor="email" className="mb-1 block text-sm font-medium text-gray-700">
                 Email
               </label>
@@ -138,10 +121,6 @@ export default function SignUpForm() {
           <div className="mt-6 space-y-3">
             <button type="submit" className="btn w-full bg-blue-600 text-white">
               Register
-            </button>
-            <div className="text-center text-sm italic text-gray-400">Or</div>
-            <button type="button" className="btn w-full bg-gray-900 text-white">
-              Continue with GitHub
             </button>
           </div>
         </form>

@@ -172,8 +172,8 @@ export default function UserPage() {
                                     <input
                                         type="email"
                                         value={formData.email}
-                                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                        className="w-full border border-gray-300 p-2 rounded-md"
+                                        readOnly
+                                        className="w-full border border-gray-300 p-2 rounded-md bg-gray-100 cursor-not-allowed"
                                     />
                                 ) : (
                                     <p className="font-medium">{formData.email}</p>
