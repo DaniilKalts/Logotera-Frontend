@@ -38,23 +38,23 @@ export default function SignUpForm() {
 
       if (response.ok) {
         const data = await response.json();
-        alert('Registration successful!');
+        alert('Регистрация прошла успешно!');
         console.log(data);
         router.push('/');
 
       } else {
-        alert('Registration failed!');
+        alert('Ошибка регистрации!');
       }
     } catch (error) {
       console.error('Error:', error);
-      alert('Error connecting to server');
+      alert('Ошибка подключения к серверу');
     }
   };
 
   return (
       <>
         <div className="mb-10">
-          <h1 className="text-4xl font-bold">Create your account</h1>
+          <h1 className="text-4xl font-bold">Создайте аккаунт</h1>
         </div>
 
         {/* Form */}
@@ -62,27 +62,27 @@ export default function SignUpForm() {
           <div className="space-y-4">
             <div>
               <label htmlFor="name" className="mb-1 block text-sm font-medium text-gray-700">
-                Name
+                Имя
               </label>
               <input
                   id="name"
                   className="form-input w-full py-2"
                   type="text"
-                  placeholder="Corey"
+                  placeholder="Имя"
                   value={formData.name}
                   onChange={handleChange}
                   required
               />
             </div>
             <div>
-              <label htmlFor="name" className="mb-1 block text-sm font-medium text-gray-700">
-                Surname
+              <label htmlFor="surname" className="mb-1 block text-sm font-medium text-gray-700">
+                Фамилия
               </label>
               <input
                   id="surname"
                   className="form-input w-full py-2"
                   type="text"
-                  placeholder="Barker"
+                  placeholder="Фамилия"
                   value={formData.surname}
                   onChange={handleChange}
                   required
@@ -90,7 +90,7 @@ export default function SignUpForm() {
             </div>
             <div>
               <label htmlFor="email" className="mb-1 block text-sm font-medium text-gray-700">
-                Email
+                Электронная почта
               </label>
               <input
                   id="email"
@@ -104,7 +104,7 @@ export default function SignUpForm() {
             </div>
             <div>
               <label htmlFor="password" className="mb-1 block text-sm font-medium text-gray-700">
-                Password
+                Пароль
               </label>
               <input
                   id="password"
@@ -120,7 +120,7 @@ export default function SignUpForm() {
           </div>
           <div className="mt-6 space-y-3">
             <button type="submit" className="btn w-full bg-blue-600 text-white">
-              Register
+              Зарегистрироваться
             </button>
           </div>
         </form>
@@ -128,9 +128,9 @@ export default function SignUpForm() {
         {/* Bottom link */}
         <div className="mt-6 text-center">
           <p className="text-sm text-gray-500">
-            By signing up, you agree to the{" "}
-            <a className="underline" href="#0">Terms of Service</a> and{" "}
-            <a className="underline" href="#0">Privacy Policy</a>.
+            Регистрируясь, вы соглашаетесь с нашими
+            <a className="underline" href="#0"> Условиями использования</a> и
+            <a className="underline" href="#0"> Политикой конфиденциальности</a>.
           </p>
         </div>
       </>

@@ -7,7 +7,7 @@ export default function AdminDashboard() {
     return (
         <div className="py-10 px-6 max-w-4xl mx-auto">
             <h2 className="text-4xl font-semibold text-center text-gray-800 mb-10">
-                Welcome, Admin
+                Добро пожаловать, Администратор
             </h2>
 
             <div className="flex flex-col sm:flex-row justify-center gap-4 mb-10">
@@ -15,13 +15,13 @@ export default function AdminDashboard() {
                     href="/group"
                     className="px-6 py-3 bg-gray-900 text-white rounded-xl shadow-md hover:bg-gray-700 transition text-center"
                 >
-                    + Create Group
+                    + Создать группу
                 </Link>
                 <Link
                     href="/subject"
                     className="px-6 py-3 bg-gray-900 text-white rounded-xl shadow-md hover:bg-gray-700 transition text-center"
                 >
-                    + Create Subject
+                    + Создать предмет
                 </Link>
             </div>
 
