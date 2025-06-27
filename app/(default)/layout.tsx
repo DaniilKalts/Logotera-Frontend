@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -24,7 +24,9 @@ export default function DefaultLayout({
 
   return (
     <>
-      <main className="max-w-6xl w-full mx-auto">{children}</main>
+      <Header />
+
+      <main className="px-6 max-w-6xl w-full mx-auto">{children}</main>
 
       <Footer border={true} />
     </>

@@ -19,7 +19,7 @@ export default function Header() {
 
   return (
       <header className="fixed top-2 z-30 w-full md:top-6">
-        <div className="max-w-6xl">
+        <div className="max-w-6xl mx-auto">
           <div
               className={`
         relative flex h-14 items-center justify-center gap-6
