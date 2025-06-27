@@ -41,6 +41,14 @@ export default function Header() {
                     <>
                       <li>
                         <Link
+                            href="/education"
+                            className="btn-sm bg-green-600 text-white shadow-sm hover:bg-green-700"
+                        >
+                          Обучение
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
                             href="/signin"
                             className="btn-sm bg-white text-gray-800 shadow-sm hover:bg-gray-50"
                         >
