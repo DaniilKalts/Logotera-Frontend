@@ -142,8 +142,8 @@ export default function TestPage() {
                         </div>
                     </div>
                 ) : (
-                    <div className="bg-white shadow-md rounded-lg p-6 text-center">
-                        <p className="text-gray-700">{calculateResult()}</p>
+                    <div className="bg-white text-gray-700 shadow-md rounded-lg p-6 text-center">
+                        {calculateResult()}
                     </div>
                 )}
             </div>
