@@ -24,7 +24,6 @@ export default function Home() {
 
     return (
         <>
-            <Header />
             <div className="pt-20 px-8 xs:px-10 sm:px-12">
                 {!isAuthenticated && <Hero />}
 

@@ -122,7 +122,6 @@ export default function TestPage() {
 
     return (
         <>
-            <Header />
             <div className="max-w-xl py-12 pb-20 sm:py-28 mx-auto">
                 <div className="mt-20"></div>
                 <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-center">Тест раннего развития</h1>
