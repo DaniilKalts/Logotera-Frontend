@@ -473,7 +473,7 @@ export default function EducationPage() {
                     )}
                     {activeSection === 'grossmotorics' && (
                         <div className="w-full max-w-3xl mx-auto mt-6 md:mt-8 bg-white rounded-2xl shadow-2xl p-4 xs:p-6 md:p-8 border border-purple-100 transition-all duration-300">
-                            <h2 className="text-2xl xs:text-4xl md:text-4xl font-extrabold mb-4 xs:mb-8 text-center text-purple-900">Развитие общей моторики</h2>
+                            <h2 className="text-2xl xs:text-4xl md:text-4xl font-extrabold mb-4 xs:mb-8 text-center uppercase text-purple-900">Развитие общей моторики</h2>
                             <div className="mb-4 xs:mb-6 text-base xs:text-lg space-y-4 xs:space-y-6 text-gray-800">
                                 <div className="bg-purple-50 rounded-xl p-4 shadow-sm">
                                     <span className="font-semibold text-purple-800">«На параде».</span><br/>
