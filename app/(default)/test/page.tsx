@@ -71,7 +71,7 @@ export default function TestPage() {
                         className="btn mt-5 group mb-4 w-full bg-linear-to-t from-green-600 to-green-500 bg-[length:100%_100%] bg-[bottom] text-white shadow-sm hover:bg-[length:100%_150%] sm:mb-0 sm:w-auto"
                     >
                         <span className="relative inline-flex items-center">
-                          Обратиться к нашим специалистам{" "}
+                          Обратиться к специалистам{" "}
                             <span className="ml-1 tracking-normal text-green-300 transition-transform group-hover:translate-x-0.5">
                             -&gt;
                           </span>
@@ -90,7 +90,7 @@ export default function TestPage() {
                         className="btn mt-5 group mb-4 w-full bg-linear-to-t from-green-600 to-green-500 bg-[length:100%_100%] bg-[bottom] text-white shadow-sm hover:bg-[length:100%_150%] sm:mb-0 sm:w-auto"
                     >
                         <span className="relative inline-flex items-center">
-                          Обратиться к нашим специалистам{" "}
+                          Обратиться к специалистам{" "}
                             <span className="ml-1 tracking-normal text-green-300 transition-transform group-hover:translate-x-0.5">
                             -&gt;
                           </span>
@@ -109,7 +109,7 @@ export default function TestPage() {
                         className="btn mt-5 group mb-4 w-full bg-linear-to-t from-green-600 to-green-500 bg-[length:100%_100%] bg-[bottom] text-white shadow-sm hover:bg-[length:100%_150%] sm:mb-0 sm:w-auto"
                     >
                         <span className="relative inline-flex items-center">
-                          Обратиться к нашим специалистам{" "}
+                          Обратиться к специалистам{" "}
                             <span className="ml-1 tracking-normal text-green-300 transition-transform group-hover:translate-x-0.5">
                             -&gt;
                           </span>
