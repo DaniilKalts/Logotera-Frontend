@@ -57,13 +57,13 @@ export default function PlacesPage() {
     return (
         <>
             <Header />
-            <div className="mt-32">
-                <h1 className="text-2xl mb-4 font-bold">Логопедические Центры</h1>
-                <div className="grid grid-cols-5 gap-12">
-                    <div className="col-span-3">
+            <div className="px-8 sm:px-0 mt-28 mb-20 sm:mt-40 sm:mb-24">
+                <h1 className="text-xl sm:text-2xl mb-4 font-bold">Логопедические Центры</h1>
+                <div className="grid grid-cols-1 md:grid-cols-5 gap-12">
+                    <div className="md:col-span-3">
                         <CityMap locations={locations} zoom={13} />
                     </div>
-                    <div className="col-span-2 flex justify-between flex-col">
+                    <div className="md:col-span-2 flex flex-col justify-between">
                         <ul className="space-y-6">
                             {clinics.map((clinic) => (
                                 <li key={clinic.name} className="border-b pb-4">
@@ -74,7 +74,7 @@ export default function PlacesPage() {
                             ))}
                         </ul>
                         <a
-                            className="btn-sm bg-blue-700 py-2 text-base text-white shadow-sm hover:bg-blue-600"
+                            className="btn-sm bg-blue-700 py-2 text-base text-white shadow-sm hover:bg-blue-600 w-full text-center"
                             href="https://t.me/+ENhYKnzzOC8xNTky"
                             target="_blank"
                             rel="noopener noreferrer"
