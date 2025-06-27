@@ -25,7 +25,7 @@ export default function Home() {
     return (
         <>
             <Header />
-            <div className="pt-20 px-4">
+            <div className="pt-20 px-12">
                 {!isAuthenticated && <Hero />}
 
                 {isAuthenticated && isAdmin && <AdminDashboard />}
