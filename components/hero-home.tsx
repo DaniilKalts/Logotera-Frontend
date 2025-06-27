@@ -71,8 +71,7 @@ export default function HeroHome() {
               data-aos="zoom-y-out"
               data-aos-delay={150}
             >
-              Detect Early. Support Strongly<br className="max-lg:hidden" />
-              Grow Together
+              Раннее выявление — залог поддержки
             </h1>
             <div className="mx-auto max-w-3xl">
               <p
@@ -80,7 +79,7 @@ export default function HeroHome() {
                 data-aos="zoom-y-out"
                 data-aos-delay={300}
               >
-                Take a quick, science-based screening test now to detect possible developmental delays or signs of autism.
+                Пройдите короткий научно обоснованный тест, чтобы выявить возможные задержки развития или признаки аутизма.
               </p>
               <div className="relative before:absolute before:inset-0 before:border-y before:[border-image:linear-gradient(to_right,transparent,--theme(--color-slate-300/.8),transparent)1]">
                 <div
@@ -93,7 +92,7 @@ export default function HeroHome() {
                       className="btn group mb-4 w-full bg-linear-to-t from-blue-600 to-blue-500 bg-[length:100%_100%] bg-[bottom] text-white shadow-sm hover:bg-[length:100%_150%] sm:mb-0 sm:w-auto"
                   >
                     <span className="relative inline-flex items-center">
-                      Take the test{" "}
+                      Пройти тест{" "}
                       <span className="ml-1 tracking-normal text-blue-300 transition-transform group-hover:translate-x-0.5">
                         -&gt;
                       </span>

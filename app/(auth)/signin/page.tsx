@@ -57,13 +57,13 @@ export default function SignInForm() {
   return (
       <>
         <div className="mb-10">
-          <h1 className="text-4xl font-bold">Sign in to your account</h1>
+          <h1 className="text-4xl font-bold">Вход в аккаунт</h1>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="space-y-4">
             <div>
               <label className="mb-1 block text-sm font-medium text-gray-700" htmlFor="email">
-                Email
+                Электронная почта
               </label>
               <input
                   id="email"
@@ -76,7 +76,7 @@ export default function SignInForm() {
             </div>
             <div>
               <label className="mb-1 block text-sm font-medium text-gray-700" htmlFor="password">
-                Password
+                Пароль
               </label>
               <input
                   id="password"
@@ -91,13 +91,13 @@ export default function SignInForm() {
           </div>
           <div className="mt-6">
             <button className="btn w-full bg-blue-600 text-white py-2 rounded shadow-sm hover:bg-blue-700">
-              Sign In
+              Войти
             </button>
           </div>
         </form>
         <div className="mt-6 text-center">
           <Link className="text-sm text-gray-700 underline hover:no-underline" href="/reset-password">
-            Forgot password?
+            Забыли пароль?
           </Link>
         </div>
       </>
