@@ -18,7 +18,7 @@ export default function Header() {
   };
 
   return (
-      <header className="fixed top-2 z-30 w-full md:top-6">
+      <header className="fixed top-2 z-100000 w-full md:top-6">
         <div className="max-w-6xl mx-auto">
           <div
               className={`
