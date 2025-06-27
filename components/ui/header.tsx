@@ -15,6 +15,7 @@ export default function Header() {
     // Clear token from storage and update state
     localStorage.removeItem("token");
     setIsLoggedIn(false);
+    window.location.reload();
   };
 
   return (

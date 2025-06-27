@@ -7,6 +7,8 @@ import Hero from "@/components/hero-home";
 import Header from "@/components/ui/header";
 import AdminDashboard from "@/app/admin/page";
 import TeacherDashboard from "@/app/teacher/page";
+import UserDashboard from "@/app/diary/page";
+
 
 export default function Home() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -27,10 +29,8 @@ export default function Home() {
             <Header />
             <div className="pt-20 px-8 xs:px-10 sm:px-12">
                 {!isAuthenticated && <Hero />}
-
                 {isAuthenticated && isAdmin && <AdminDashboard />}
-                {isAuthenticated && isTeacher && <TeacherDashboard/>}
-
+                {isAuthenticated && <UserDashboard/>}
             </div>
         </>
     );
