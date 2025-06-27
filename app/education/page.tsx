@@ -27,7 +27,7 @@ export default function EducationPage() {
                     {/* Секции: адаптивные паддинги, шрифты, плавные переходы */}
                     {activeSection === 'poems' && (
                         <div className="w-full max-w-3xl mx-auto mt-6 md:mt-8 bg-white rounded-2xl shadow-2xl p-4 xs:p-6 md:p-8 border border-blue-100 transition-all duration-300">
-                            <h2 className="text-2xl xs:text-3xl md:text-3xl font-extrabold mb-4 xs:mb-6 text-blue-900 text-center">Стихи и потешки для развития речи детей от 0 до 3 лет</h2>
+                            <h2 className="text-2xl xs:text-3xl md:text-4xl font-extrabold mb-4 xs:mb-8 text-blue-900 text-center">Стихи и потешки для развития речи детей от 0 до 3 лет</h2>
                             <div className="mb-4 xs:mb-6 text-base xs:text-lg space-y-4 xs:space-y-6 text-gray-800">
                                 <div className="bg-blue-50 rounded-xl p-4 shadow-sm">
                                     <span className="font-semibold text-blue-800">Сорока. Русская народная потешка.</span><br/>
@@ -219,7 +219,7 @@ export default function EducationPage() {
                     )}
                     {activeSection === 'games' && (
                         <div className="w-full max-w-3xl mx-auto mt-6 md:mt-8 bg-green-50 rounded-2xl shadow-2xl p-4 xs:p-6 md:p-8 border border-green-200 transition-all duration-300">
-                            <h2 className="text-2xl xs:text-3xl md:text-3xl font-extrabold mb-4 xs:mb-6 text-green-900 text-center">Артикуляционные, пальчиковые гимнастики. Логопедические игры. Правила.</h2>
+                            <h2 className="text-2xl xs:text-3xl md:text-4xl font-extrabold mb-4 xs:mb-8 text-green-900 text-center">Артикуляционные, пальчиковые гимнастики. Логопедические игры. Правила.</h2>
                             <div className="mb-4 xs:mb-6 text-base xs:text-lg space-y-4 xs:space-y-6 text-gray-800">
                                 <div className="bg-green-100 rounded-xl p-4 shadow-sm">
                                     <span className="font-semibold text-green-800">Введение</span><br/>
@@ -297,7 +297,7 @@ export default function EducationPage() {
                     )}
                     {activeSection === 'motorics' && (
                         <div className="w-full max-w-3xl mx-auto mt-6 md:mt-8 bg-white rounded-2xl shadow-2xl p-4 xs:p-6 md:p-8 border border-yellow-100 transition-all duration-300">
-                            <h2 className="text-2xl xs:text-3xl md:text-3xl font-extrabold mb-4 xs:mb-6 text-yellow-900 text-center">Пальчиковая гимнастика</h2>
+                            <h2 className="text-2xl xs:text-3xl md:text-4xl font-extrabold mb-4 xs:mb-8 text-yellow-900 text-center">Пальчиковая гимнастика</h2>
                             <div className="mb-4 xs:mb-6 text-base xs:text-lg space-y-4 xs:space-y-6 text-gray-800">
                                 <div className="bg-yellow-50 rounded-xl p-4 shadow-sm">
                                     <span className="font-semibold text-yellow-800">Цель — развитие мелкой моторики</span><br/>
@@ -473,7 +473,7 @@ export default function EducationPage() {
                     )}
                     {activeSection === 'grossmotorics' && (
                         <div className="w-full max-w-3xl mx-auto mt-6 md:mt-8 bg-white rounded-2xl shadow-2xl p-4 xs:p-6 md:p-8 border border-purple-100 transition-all duration-300">
-                            <h2 className="text-2xl xs:text-4xl md:text-4xl font-extrabold mb-4 xs:mb-8 text-center uppercase text-purple-900">Развитие общей моторики</h2>
+                            <h2 className="text-2xl xs:text-3xl md:text-4xl font-extrabold mb-4 xs:mb-8 text-purple-900 text-center">Развитие общей моторики</h2>
                             <div className="mb-4 xs:mb-6 text-base xs:text-lg space-y-4 xs:space-y-6 text-gray-800">
                                 <div className="bg-purple-50 rounded-xl p-4 shadow-sm">
                                     <span className="font-semibold text-purple-800">«На параде».</span><br/>
