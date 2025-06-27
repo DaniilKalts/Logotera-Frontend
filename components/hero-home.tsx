@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import PageIllustration from "@/components/page-illustration";
 import Avatar01 from "@/public/images/avatar-01.jpg";
@@ -83,11 +85,7 @@ export default function HeroHome() {
               </p>
               <div className="relative before:absolute before:inset-0 before:border-y before:[border-image:linear-gradient(to_right,transparent,--theme(--color-slate-300/.8),transparent)1]">
                 <div
-<<<<<<< HEAD
                   className="mx-auto max-w-xs sm:flex sm:max-w-none sm:justify-center gap-4"
-=======
-                  className="mx-auto max-w-xs gap-5 sm:flex sm:max-w-none sm:justify-center"
->>>>>>> 3e6a3dcf5b65087316ab21caed3d676faf0d2326
                   data-aos="zoom-y-out"
                   data-aos-delay={450}
                 >
