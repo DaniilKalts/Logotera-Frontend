@@ -56,7 +56,6 @@ export default function PlacesPage() {
 
     return (
         <>
-            <Header />
             <div className="px-8 sm:px-0 mt-28 mb-20 sm:mt-40 sm:mb-24">
                 <h1 className="text-xl sm:text-2xl mb-4 font-bold">Логопедические Центры</h1>
                 <div className="grid grid-cols-1 md:grid-cols-5 gap-12">

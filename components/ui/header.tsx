@@ -19,8 +19,8 @@ export default function Header() {
   };
 
   return (
-      <header className="fixed top-2 z-30 w-full md:top-6">
-        <div className="max-w-6xl">
+      <header className="fixed top-2 z-100000 w-full md:top-6">
+        <div className="max-w-6xl mx-auto">
           <div
               className={`
         relative flex h-14 items-center justify-center gap-6
@@ -40,6 +40,14 @@ export default function Header() {
               <ul className="flex items-center gap-3">
                 {!isLoggedIn ? (
                     <>
+                      <li>
+                        <Link
+                            href="/education"
+                            className="btn-sm bg-green-600 text-white shadow-sm hover:bg-green-700"
+                        >
+                          Обучение
+                        </Link>
+                      </li>
                       <li>
                         <Link
                             href="/signin"

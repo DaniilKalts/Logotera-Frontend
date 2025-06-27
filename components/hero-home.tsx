@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import PageIllustration from "@/components/page-illustration";
 import Avatar01 from "@/public/images/avatar-01.jpg";
@@ -83,7 +85,7 @@ export default function HeroHome() {
               </p>
               <div className="relative before:absolute before:inset-0 before:border-y before:[border-image:linear-gradient(to_right,transparent,--theme(--color-slate-300/.8),transparent)1]">
                 <div
-                  className="mx-auto max-w-xs sm:flex sm:max-w-none sm:justify-center"
+                  className="mx-auto max-w-xs sm:flex sm:max-w-none sm:justify-center gap-4"
                   data-aos="zoom-y-out"
                   data-aos-delay={450}
                 >
@@ -94,6 +96,17 @@ export default function HeroHome() {
                     <span className="relative inline-flex items-center">
                       Пройти тест{" "}
                       <span className="ml-1 tracking-normal text-blue-300 transition-transform group-hover:translate-x-0.5">
+                        -&gt;
+                      </span>
+                    </span>
+                  </Link>
+                  <Link
+                      href="/places"
+                      className="btn group mb-4 w-full bg-linear-to-t from-green-600 to-green-500 bg-[length:100%_100%] bg-[bottom] text-white shadow-sm hover:bg-[length:100%_150%] sm:mb-0 sm:w-auto"
+                  >
+                    <span className="relative inline-flex items-center">
+                      Центры{" "}
+                      <span className="ml-1 tracking-normal text-green-300 transition-transform group-hover:translate-x-0.5">
                         -&gt;
                       </span>
                     </span>
