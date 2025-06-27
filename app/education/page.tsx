@@ -13,23 +13,12 @@ export default function EducationPage() {
         <DefaultLayout>
             <div className="relative min-h-screen flex flex-col md:flex-row bg-[url('/images/planet-overlay.svg')] bg-no-repeat bg-top bg-cover bg-gray-50">
                 {/* Кнопка "Назад" фиксирована и адаптивна */}
-                <div className="fixed left-0 top-0 z-50 w-full flex justify-start px-safe py-safe pointer-events-none">
-                    <div className="mt-4 ml-4 pointer-events-auto">
-                        <button
-                            className="flex items-center gap-2 px-3 py-2 md:px-4 md:py-2 bg-gray-200 text-gray-800 rounded-xl shadow hover:bg-gray-300 transition text-base md:text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-blue-400"
-                            onClick={() => window.location.href = '/'}
-                            aria-label="Назад"
-                        >
-                            <span className="text-xl">←</span> <span className="hidden xs:inline">Назад</span>
-                        </button>
-                    </div>
-                </div>
-                <div className="w-full max-w-5xl mx-auto px-2 sm:px-4 py-8 sm:py-10 bg-gray-50 rounded-3xl shadow-none mt-16 md:mt-0">
+                <div className="w-full max-w-5xl mx-auto px-2 sm:px-4 py-8 sm:py-10 bg-gray-50 rounded-3xl shadow-none mt-20 md:mt-20">
                     <h1 className="text-2xl xs:text-3xl md:text-4xl font-bold mb-6 md:mb-8 text-center">Обучающие материалы</h1>
                     {/* Добавлен дополнительный отступ для смещения меню ниже */}
                     <div className="h-2 md:h-4" />
                     {/* Меню разделов: горизонтальный скролл на мобилках, сетка на десктопе */}
-                    <div className="flex md:grid md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 mb-6 md:mb-10 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-200 pb-2 -mx-2 px-2 snap-x">
+                    <div className="flex md:grid md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 mb-6 md:mb-10 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-200 pb-2 -mx-2 px-2 snap-x pt-1">
                         <button className="min-w-[180px] snap-start bg-blue-100 hover:bg-blue-200 text-blue-900 font-bold py-5 xs:py-8 px-2 xs:px-4 rounded-xl shadow-lg text-base xs:text-xl transition w-full focus:outline-none focus:ring-2 focus:ring-blue-400" onClick={() => handleSection('poems')}>Стихотворения</button>
                         <button className="min-w-[180px] snap-start bg-green-100 hover:bg-green-200 text-green-900 font-bold py-5 xs:py-8 px-2 xs:px-4 rounded-xl shadow-lg text-base xs:text-xl transition w-full focus:outline-none focus:ring-2 focus:ring-green-400" onClick={() => handleSection('games')}>Логопедические игры</button>
                         <button className="min-w-[180px] snap-start bg-yellow-100 hover:bg-yellow-200 text-yellow-900 font-bold py-5 xs:py-8 px-2 xs:px-4 rounded-xl shadow-lg text-base xs:text-xl transition w-full focus:outline-none focus:ring-2 focus:ring-yellow-400" onClick={() => handleSection('motorics')}>Пальчиковая гимнастика</button>
