@@ -148,8 +148,7 @@ export default function Home() {
                     </button>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-7 gap-6 mb-12">
-                    {days.map(day => (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-12">                    {days.map(day => (
                         <div
                             key={day.toDateString()}
                             className="bg-white rounded-xl shadow-md p-5 flex flex-col justify-between hover:shadow-lg transition"

@@ -42,14 +42,6 @@ export default function Header() {
                     <>
                       <li>
                         <Link
-                            href="/education"
-                            className="btn-sm bg-green-600 text-white shadow-sm hover:bg-green-700"
-                        >
-                          Обучение
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
                             href="/signin"
                             className="btn-sm bg-white text-gray-800 shadow-sm hover:bg-gray-50"
                         >
@@ -72,17 +64,33 @@ export default function Header() {
                             href="/profile"
                             className="btn-sm bg-white text-gray-800 shadow-sm hover:bg-gray-50"
                         >
-                          Profile
+                          Профиль
                         </Link>
                       </li>
-                      <li>
-                        <button
-                            onClick={handleLogout}
-                            className="btn-sm bg-red-500 text-white shadow-sm hover:bg-red-600"
-                        >
-                          Logout
-                        </button>
-                      </li>
+                        <li>
+                            <Link
+                                href="/education"
+                                className="btn-sm bg-white text-gray-800 shadow-sm hover:bg-gray-50"
+                            >
+                                Обучение
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                href="/places"
+                                className="btn-sm bg-white text-gray-800 shadow-sm hover:bg-gray-50"
+                            >
+                                Центры
+                            </Link>
+                        </li>
+                        <li>
+                            <button
+                                onClick={handleLogout}
+                                className="btn-sm bg-red-500 text-white shadow-sm hover:bg-red-600"
+                            >
+                                Logout
+                            </button>
+                        </li>
                     </>
                 )}
               </ul>

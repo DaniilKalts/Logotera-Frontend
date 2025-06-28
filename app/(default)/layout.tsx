@@ -26,7 +26,7 @@ export default function DefaultLayout({
     <>
       <Header />
 
-      <main className="px-6 max-w-6xl w-full mx-auto">{children}</main>
+      <main className="px-6 max-w-6xl w-full mx-auto mb-20">{children}</main>
 
       <Footer border={true} />
     </>
